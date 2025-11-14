@@ -1,0 +1,7 @@
+/* /agendamento/frontend/public/fonts/rawline/rawline.css */
+@font-face {
+  font-family: 'Rawline';
+  src: url('./rawline-regular.woff2') format('woff2');
+  font-weight: 400; /* Peso regular */
+  font-style: normal;
+}

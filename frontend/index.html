@@ -1,0 +1,32 @@
+<!-- Nome do arquivo: ./frontend/index.html -->
+<!-- Finalidade: Arquivo HTML principal do frontend. -->
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1351B4" />
+    <meta name="description" content="Sistema de Agendamento" />
+    <title>Agendamento</title>
+
+    <!-- Ícone da aba -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+    <!--  Fonte Rawline (corrigido para pasta public/fonts) -->
+    <link rel="stylesheet" href="/fonts/rawline/rawline.css" />
+
+    <!--  React Toastify (copiado para dist/assets via Dockerfile) -->
+    <link rel="stylesheet" href="/assets/ReactToastify.css" />
+
+    <!-- Estilos adicionais podem ser incluídos aqui -->
+  </head>
+  <body>
+    <noscript>Você precisa habilitar o JavaScript para usar este aplicativo.</noscript>
+
+    <!-- Ponto de montagem do React -->
+    <div id="root"></div>
+
+    <!-- Script principal da aplicação -->
+    <script type="module" src="/src/index.tsx"></script>
+  </body>
+</html>

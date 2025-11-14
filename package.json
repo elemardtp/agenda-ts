@@ -1,0 +1,24 @@
+{
+  "name": "agendamento-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "start": "npm run start --workspace=backend & npm run start --workspace=frontend",
+    "dev": "npm run dev --workspace=backend & npm run dev --workspace=frontend",
+    "build": "npm run build --workspace=frontend",
+    "lint": "npm run lint --workspaces",
+    "test": "npm run test --workspaces"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Monorepo para agendamento (backend + frontend)",
+  "dependencies": {
+    "@govbr-ds/webcomponents-react": "^2.0.0-next.52",
+    "dotenv": "^17.2.3"
+  }
+}

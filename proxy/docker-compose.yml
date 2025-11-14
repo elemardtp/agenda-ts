@@ -1,0 +1,71 @@
+# Nome do arquivo: ./proxy/docker-compose.yml
+# Finalidade: Docker Compose para configuração com proxy.
+version: '3.8'
+
+services:
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend1
+      - backend2
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    networks:
+      - app-network
+
+  backend1:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+      - NODE_PORT=3000
+      - DATABASE_URL=postgres://user:password@agendamento-pg:5432/agendamento
+    depends_on:
+      - agendamento-pg
+    networks:
+      - app-network
+
+  backend2:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+      - NODE_PORT=3000
+      - DATABASE_URL=postgres://user:password@agendamento-pg:5432/agendamento
+    depends_on:
+      - agendamento-pg
+    networks:
+      - app-network
+
+  agendamento-pg:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=agendamento
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./backend/init-scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  pgdata:

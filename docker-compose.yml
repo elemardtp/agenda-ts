@@ -1,0 +1,70 @@
+# Nome do arquivo: ./docker-compose.yml
+# Finalidade: Docker Compose principal para o projeto.
+# docker-compose.yml
+# Project name set to "agendamento" (no double prefix)
+name: agendamento-ts
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    volumes:
+      - ./backend/uploads:/agendamento/uploads
+    depends_on:
+      agendamento-pg:
+        condition: service_healthy
+    networks:
+      - agendamento-network-ts
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=${VITE_API_URL:-http://localhost:3000}  # Fallback para http://localhost:3000
+    container_name: agendamento-frontend-ts
+    ports:
+      - "3001:80"
+      - "5173:5173"
+    env_file:
+      - .env
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - agendamento-network-ts
+    volumes:
+      - ./frontend/src:/app/src  # Hot reload src
+
+  agendamento-pg:
+    image: postgres:14
+    container_name: agendamento-ts-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-agendador}  # Fallback para 'agendador'
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-abobora99}  # Fallback para 'abobora99'
+      POSTGRES_DB: ${POSTGRES_DB:-agenda}  # Fallback para 'agenda'
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./backend/init-scripts/db:/docker-entrypoint-initdb.d/
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-agendador} -d ${POSTGRES_DB:-agenda}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - agendamento-network-ts
+
+volumes:
+  pgdata:
+  uploads:
+
+networks:
+  agendamento-network-ts:
+    driver: bridge

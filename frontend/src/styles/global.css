@@ -1,0 +1,69 @@
+/* Nome do arquivo: ./frontend/src/styles/global.css */
+/* Finalidade: Estilos globais CSS para o frontend. */
+@import '@govbr-ds/core/dist/core.min.css';
+@import 'react-toastify/dist/ReactToastify.css';
+
+.br-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.br-main {
+  flex: 1;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.br-footer {
+  background-color: #f8f8f8;
+  padding: 10px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .br-main {
+    padding: 10px;
+  }
+  .br-header h1 {
+    font-size: 1.5rem;
+  }
+  .br-menu-item {
+    font-size: 0.9rem;
+  }
+}
+
+.br-card {
+  margin-bottom: 20px;
+}
+
+.br-input input {
+  width: 100%;
+  padding: 8px;
+}
+
+.br-button {
+  margin-top: 10px;
+}
+
+@font-face {
+  font-family: 'Rawline';
+  src: url('/assets/fonts/rawline/rawline-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Rawline';
+  src: url('/assets/fonts/rawline/rawline-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Rawline';
+  src: url('/assets/fonts/rawline/rawline-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
